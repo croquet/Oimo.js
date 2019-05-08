@@ -106,6 +106,8 @@ function World ( o ) {
     this.joints=null;
     // The number of joints.
     this.numJoints=0;
+    // The number of shapes.
+    this.numShapes=0;
     // The number of simulation islands.
     this.numIslands=0;
 
@@ -166,7 +168,7 @@ Object.assign( World.prototype, {
     World: true,
 
     play: function(){
- 
+
         if( this.timer !== null ) return;
 
         var _this = this;
@@ -299,6 +301,7 @@ Object.assign( World.prototype, {
             printError("World", "It is not possible to be added alone to shape world");
         }
 
+        shape.id = this.numShapes++;
         shape.proxy = this.broadPhase.createProxy(shape);
         shape.updateProxy();
         this.broadPhase.addProxy(shape.proxy);
@@ -742,7 +745,7 @@ Object.assign( World.prototype, {
     },
 
     // add someting to world
-    
+
     add: function( o ){
 
         o = o || {};
@@ -792,7 +795,7 @@ Object.assign( World.prototype, {
         if( s.length === 2 ){ s[2] = s[0]; }
         s = s.map( function(x) { return x * invScale; } );
 
-        
+
 
         // body physics settings
         var sc = new ShapeConfig();
@@ -843,7 +846,7 @@ Object.assign( World.prototype, {
 
             if( p2[n] !== undefined ) sc.relativePosition.set( p2[n], p2[n+1], p2[n+2] );
             if( r2[n] !== undefined ) sc.relativeRotation.setQuat( new Quat().setFromEuler( r2[n], r2[n+1], r2[n+2] ) );
-            
+
             switch( type[i] ){
                 case "sphere": shape = new Sphere( sc, s[n] ); break;
                 case "cylinder": shape = new Cylinder( sc, s[n], s[n+1] ); break;
@@ -852,7 +855,7 @@ Object.assign( World.prototype, {
             }
 
             body.addShape( shape );
-            
+
         }
 
         // body can sleep or not

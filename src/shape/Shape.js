@@ -5,9 +5,6 @@ import { Vec3 } from '../math/Vec3';
 import { Mat33 } from '../math/Mat33';
 import { AABB } from '../math/AABB';
 
-var count = 0;
-function ShapeIdCount() { return count++; }
-
 /**
  * A shape is used to detect collisions of rigid bodies.
  *
@@ -20,7 +17,7 @@ function Shape ( config ) {
     this.type = SHAPE_NULL;
 
     // global identification of the shape should be unique to the shape.
-    this.id = ShapeIdCount();
+    this.id = NaN;
 
     // previous shape in parent rigid body. Used for fast interations.
     this.prev = null;

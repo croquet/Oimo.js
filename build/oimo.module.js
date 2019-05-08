@@ -1713,9 +1713,6 @@ Object.assign( AABB.prototype, {
 
 });
 
-var count = 0;
-function ShapeIdCount() { return count++; }
-
 /**
  * A shape is used to detect collisions of rigid bodies.
  *
@@ -1728,7 +1725,7 @@ function Shape ( config ) {
     this.type = SHAPE_NULL;
 
     // global identification of the shape should be unique to the shape.
-    this.id = ShapeIdCount();
+    this.id = NaN;
 
     // previous shape in parent rigid body. Used for fast interations.
     this.prev = null;
@@ -6361,8 +6358,8 @@ Object.assign( BroadPhase.prototype, {
 
 });
 
-var count$1 = 0;
-function ProxyIdCount() { return count$1++; }
+var count = 0;
+function ProxyIdCount() { return count++; }
 
 /**
  * A proxy is used for broad-phase collecting pairs that can be colliding.
@@ -11323,6 +11320,8 @@ function World ( o ) {
     this.joints=null;
     // The number of joints.
     this.numJoints=0;
+    // The number of shapes.
+    this.numShapes=0;
     // The number of simulation islands.
     this.numIslands=0;
 
@@ -11383,7 +11382,7 @@ Object.assign( World.prototype, {
     World: true,
 
     play: function(){
- 
+
         if( this.timer !== null ) return;
 
         var _this = this;
@@ -11516,6 +11515,7 @@ Object.assign( World.prototype, {
             printError("World", "It is not possible to be added alone to shape world");
         }
 
+        shape.id = this.numShapes++;
         shape.proxy = this.broadPhase.createProxy(shape);
         shape.updateProxy();
         this.broadPhase.addProxy(shape.proxy);
@@ -11959,7 +11959,7 @@ Object.assign( World.prototype, {
     },
 
     // add someting to world
-    
+
     add: function( o ){
 
         o = o || {};
@@ -12009,7 +12009,7 @@ Object.assign( World.prototype, {
         if( s.length === 2 ){ s[2] = s[0]; }
         s = s.map( function(x) { return x * invScale; } );
 
-        
+
 
         // body physics settings
         var sc = new ShapeConfig();
@@ -12060,7 +12060,7 @@ Object.assign( World.prototype, {
 
             if( p2[n] !== undefined ) sc.relativePosition.set( p2[n], p2[n+1], p2[n+2] );
             if( r2[n] !== undefined ) sc.relativeRotation.setQuat( new Quat().setFromEuler( r2[n], r2[n+1], r2[n+2] ) );
-            
+
             switch( type[i] ){
                 case "sphere": shape = new Sphere( sc, s[n] ); break;
                 case "cylinder": shape = new Cylinder( sc, s[n], s[n+1] ); break;
@@ -12069,7 +12069,7 @@ Object.assign( World.prototype, {
             }
 
             body.addShape( shape );
-            
+
         }
 
         // body can sleep or not
@@ -12205,4 +12205,4 @@ Object.assign( World.prototype, {
 //export { RigidBody } from './core/RigidBody_X.js';
 //export { World } from './core/World_X.js';
 
-export { _Math as Math, Vec3, Quat, Mat33, Shape, Box, Sphere, Cylinder, Plane, Particle, ShapeConfig, LimitMotor, HingeJoint, BallAndSocketJoint, DistanceJoint, PrismaticJoint, SliderJoint, WheelJoint, JointConfig, RigidBody, World, REVISION, BR_NULL, BR_BRUTE_FORCE, BR_SWEEP_AND_PRUNE, BR_BOUNDING_VOLUME_TREE, BODY_NULL, BODY_DYNAMIC, BODY_STATIC, BODY_KINEMATIC, BODY_GHOST, SHAPE_NULL, SHAPE_SPHERE, SHAPE_BOX, SHAPE_CYLINDER, SHAPE_PLANE, SHAPE_PARTICLE, SHAPE_TETRA, JOINT_NULL, JOINT_DISTANCE, JOINT_BALL_AND_SOCKET, JOINT_HINGE, JOINT_WHEEL, JOINT_SLIDER, JOINT_PRISMATIC, AABB_PROX, printError, InfoDisplay };
+export { AABB_PROX, BODY_DYNAMIC, BODY_GHOST, BODY_KINEMATIC, BODY_NULL, BODY_STATIC, BR_BOUNDING_VOLUME_TREE, BR_BRUTE_FORCE, BR_NULL, BR_SWEEP_AND_PRUNE, BallAndSocketJoint, Box, Cylinder, DistanceJoint, HingeJoint, InfoDisplay, JOINT_BALL_AND_SOCKET, JOINT_DISTANCE, JOINT_HINGE, JOINT_NULL, JOINT_PRISMATIC, JOINT_SLIDER, JOINT_WHEEL, JointConfig, LimitMotor, Mat33, _Math as Math, Particle, Plane, PrismaticJoint, Quat, REVISION, RigidBody, SHAPE_BOX, SHAPE_CYLINDER, SHAPE_NULL, SHAPE_PARTICLE, SHAPE_PLANE, SHAPE_SPHERE, SHAPE_TETRA, Shape, ShapeConfig, SliderJoint, Sphere, Vec3, WheelJoint, World, printError };
