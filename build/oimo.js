@@ -8958,6 +8958,9 @@
 	        var v02x=c2.position.x;
 	        var v02y=c2.position.y;
 	        var v02z=c2.position.z;
+	        if (Number.isNaN(v01x) || Number.isNaN(v01y) || Number.isNaN(v01z) || Number.isNaN(v02x) || Number.isNaN(v02y) || Number.isNaN(v02z)) {
+	            throw new Error("Got NaN position");
+	        }
 	        var v0x=v02x-v01x;
 	        var v0y=v02y-v01y;
 	        var v0z=v02z-v01z;
@@ -9463,7 +9466,7 @@
 	        var v4x;
 	        var v4y;
 	        var v4z;
-	        
+
 	        dot=1;
 	        state=0;
 	        dot1=nwx*nx+nwy*ny+nwz*nz;
@@ -9961,7 +9964,7 @@
 	    });
 
 	function CylinderCylinderCollisionDetector() {
-	    
+
 	    CollisionDetector.call( this );
 
 	}
@@ -9992,6 +9995,9 @@
 	        var v02x=c2.position.x;
 	        var v02y=c2.position.y;
 	        var v02z=c2.position.z;
+	        if (Number.isNaN(v01x) || Number.isNaN(v01y) || Number.isNaN(v01z) || Number.isNaN(v02x) || Number.isNaN(v02y) || Number.isNaN(v02z)) {
+	            throw new Error("Got NaN position");
+	        }
 	        var v0x=v02x-v01x;
 	        var v0y=v02y-v01y;
 	        var v0z=v02z-v01z;
@@ -10580,7 +10586,7 @@
 	        depth1=len;
 	        if(depth1<0) manifold.addPoint(sx,sy,sz,nx,ny,nz,pd,false);
 	        if(depth2<0) manifold.addPoint(ex,ey,ez,nx,ny,nz,pd,false);
-	        
+
 	        }
 	        break;
 	        case 2:

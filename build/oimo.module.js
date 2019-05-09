@@ -8952,6 +8952,9 @@ BoxCylinderCollisionDetector.prototype = Object.assign( Object.create( Collision
         var v02x=c2.position.x;
         var v02y=c2.position.y;
         var v02z=c2.position.z;
+        if (Number.isNaN(v01x) || Number.isNaN(v01y) || Number.isNaN(v01z) || Number.isNaN(v02x) || Number.isNaN(v02y) || Number.isNaN(v02z)) {
+            throw new Error("Got NaN position");
+        }
         var v0x=v02x-v01x;
         var v0y=v02y-v01y;
         var v0z=v02z-v01z;
@@ -9457,7 +9460,7 @@ BoxCylinderCollisionDetector.prototype = Object.assign( Object.create( Collision
         var v4x;
         var v4y;
         var v4z;
-        
+
         dot=1;
         state=0;
         dot1=nwx*nx+nwy*ny+nwz*nz;
@@ -9955,7 +9958,7 @@ BoxCylinderCollisionDetector.prototype = Object.assign( Object.create( Collision
     });
 
 function CylinderCylinderCollisionDetector() {
-    
+
     CollisionDetector.call( this );
 
 }
@@ -9986,6 +9989,9 @@ CylinderCylinderCollisionDetector.prototype = Object.assign( Object.create( Coll
         var v02x=c2.position.x;
         var v02y=c2.position.y;
         var v02z=c2.position.z;
+        if (Number.isNaN(v01x) || Number.isNaN(v01y) || Number.isNaN(v01z) || Number.isNaN(v02x) || Number.isNaN(v02y) || Number.isNaN(v02z)) {
+            throw new Error("Got NaN position");
+        }
         var v0x=v02x-v01x;
         var v0y=v02y-v01y;
         var v0z=v02z-v01z;
@@ -10574,7 +10580,7 @@ CylinderCylinderCollisionDetector.prototype = Object.assign( Object.create( Coll
         depth1=len;
         if(depth1<0) manifold.addPoint(sx,sy,sz,nx,ny,nz,pd,false);
         if(depth2<0) manifold.addPoint(ex,ey,ez,nx,ny,nz,pd,false);
-        
+
         }
         break;
         case 2:
